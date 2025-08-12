@@ -1,42 +1,2237 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+:root {
+  --primary: #6c5ce7;
+  --primary-hover: #5649c0;
+  --bg-dark: #2d3436;
+  --text-muted: #636e72;
+  --white: #ffffff;
+  --light: #f5f6fa;
+  --radius: 0.5rem;
+  --transition: 0.3s ease;
+  --text-secondary: #151618;
+  --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  --primary-color: #6c5ce7;
+  --secondary-color: #a29bfe;
+  --dark-color: #2d3436;
+  --success-color: #00b894;
+  --event-color: #e74c3c;
+  --event-hover: #c0392b;
+  --glass-bg: rgba(255, 255, 255, 0.2);
+  --gradient-bg: linear-gradient(
+    90deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f6fa 0%, #e0e7ff 100%);
+  color: var(--dark-color);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  z-index: 1030;
+  transition: transform var(--transition);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  .main-content {
+    margin-left: 0 !important;
+  }
+  .navbar-toggler {
+    display: block !important;
+  }
+  .sidebar-close-btn {
+    display: block !important;
+  }
+}
+
+.sidebar .logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  padding: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.sidebar .logo img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  transition: transform var(--transition);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+.sidebar .logo img:hover {
+  transform: scale(1.1);
+}
+
+.sidebar .logo-text {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.sidebar .nav-link {
+  color: var(--dark-color);
+  border-radius: 5px;
+  margin: 5px 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--transition);
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background: var(--gradient-bg);
+  color: white;
+  transform: translateX(5px);
+}
+
+.sidebar .nav-link .dropdown-icon {
+  transition: transform var(--transition);
+}
+
+.sidebar .nav-link.collapsed .dropdown-icon {
+  transform: rotate(-90deg);
+}
+
+.sidebar .dropdown-menu {
+  padding-left: 20px;
+  background-color: rgba(242, 242, 242, 0.8);
+  border: none;
+  box-shadow: none;
+  transition: max-height var(--transition);
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.sidebar .dropdown-item {
+  padding: 8px 15px;
+  border-radius: 5px;
+  margin: 2px 0;
+  transition: all var(--transition);
+}
+
+.sidebar .dropdown-item:hover,
+.sidebar .dropdown-item.active {
+  background: var(--gradient-bg);
+  color: white;
+  transform: translateX(5px);
+}
+
+.sidebar .nav-section {
+  font-weight: bold;
+  margin: 15px 15px 5px;
+  color: var(--dark-color);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin var(--transition);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.dashboard-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark-color);
+  background: var(--gradient-bg);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-toggler {
+  display: none;
+  border: none;
+  background: transparent;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  color: var(--primary-color);
+}
+
+.sidebar-close-btn {
+  display: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.stat-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--hover-shadow);
 }
 
+.stat-card .icon {
+  font-size: 2rem;
+  background: var(--gradient-bg);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+}
+
+.stat-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+  color: var(--dark-color);
+}
+
+.stat-card .update-info {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+}
+
+.stat-card .update-info i {
+  margin-right: 5px;
+  color: var(--success-color);
+}
+
+/* Chart.js Cards */
 .card {
-  padding: 2em;
+  border-radius: 16px !important;
+  background: linear-gradient(135deg, #f8f9fa 0%, #dbeafe 100%);
+  box-shadow: var(--card-shadow);
+  padding: 18px 10px 10px 10px;
+  margin-bottom: 24px;
+  border: none;
+}
+.card.shadow {
+  box-shadow: 0 4px 24px #0001 !important;
 }
 
-.read-the-docs {
-  color: #888;
+/* Chart.js Custom */
+.chartjs-render-monitor {
+  border-radius: 12px;
+}
+.chartjs-tooltip {
+  background: #fff !important;
+  color: #222 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 10px #0002 !important;
+  font-size: 0.97em;
+}
+
+/* Mini Calendar */
+.mini-calendar {
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: var(--card-shadow);
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease forwards 0.2s;
+}
+
+.mini-calendar-header {
+  margin-bottom: 12px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--dark-color);
+  font-size: 1.1rem;
+}
+
+.mini-calendar-header button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color var(--transition);
+  padding: 5px;
+}
+
+.mini-calendar-header button:hover {
+  color: var(--primary-hover);
+}
+
+.mini-calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin-bottom: 10px;
+  padding: 8px 0;
+  background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.mini-calendar-weekdays div {
+  padding: 6px;
+  line-height: 1.2;
+}
+
+.mini-calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  min-height: 200px;
+}
+
+.mini-calendar-day {
+  padding: 8px;
+  text-align: center;
+  font-size: 0.95rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  line-height: 1.5;
+}
+
+.mini-calendar-day:hover {
+  background-color: var(--secondary-color);
+  color: white;
+  transform: scale(1.05);
+}
+
+.mini-calendar-day.empty {
+  background: transparent;
+  box-shadow: none;
+  visibility: hidden;
+}
+
+.mini-calendar-day.today {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.mini-calendar-day.selected {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  font-weight: bold;
+  background: #ffffff;
+}
+
+.mini-calendar-day.event {
+  background-color: var(--event-color);
+  color: white;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+}
+
+.mini-calendar-day.event:hover {
+  background-color: var(--event-hover);
+}
+
+.mini-calendar-day.event::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+}
+
+.event-dot {
+  display: inline-block;
+}
+
+/* Modal Styles for Calendar Events */
+.modal.fade.show {
+  display: block;
+  background: rgba(44, 62, 80, 0.16);
+  z-index: 1050;
+}
+.modal-dialog {
+  border-radius: 18px;
+}
+.modal-content {
+  border-radius: 16px;
+  background: linear-gradient(145deg, #f8f9fa 0%, #ffffff 100%);
+}
+.modal-header {
+  border-bottom: none;
+  background: linear-gradient(90deg, #f5f6fa 0%, #e0e7ff 100%);
+  border-radius: 16px 16px 0 0;
+}
+.modal-title {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+/* Exam Section */
+.exam-section {
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+  box-shadow: var(--card-shadow);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease forwards 0.1s;
+}
+
+.exam-section h5 {
+  margin-bottom: 15px;
+  color: var(--dark-color);
+}
+
+.exam-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  transition: all var(--transition);
+}
+
+.exam-item:hover {
+  background-color: #f8f9fa;
+  padding-left: 5px;
+}
+
+.exam-item:last-child {
+  border-bottom: none;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 20px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid #eee;
+}
+.footer span {
+  transition: color var(--transition);
+  cursor: pointer;
+}
+.footer span:hover {
+  color: var(--primary-color);
+}
+
+.calendar-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reset-date-btn {
+  background: none;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.reset-date-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Table Styles */
+.query-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 1rem;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.query-table thead {
+  background: var(--gradient-bg);
+  color: white;
+}
+.query-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.query-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+.query-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.query-table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+.query-table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+.query-table tbody tr:hover {
+  background-color: rgba(108, 92, 231, 0.1);
+  transition: all var(--transition);
+}
+.query-table th:first-child {
+  border-top-left-radius: 10px;
+}
+.query-table th:last-child {
+  border-top-right-radius: 10px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 767px) {
+  .dashboard-title,
+  .html-reference-section h2 {
+    font-size: 1.5rem;
+  }
+  .stat-card {
+    padding: 15px;
+  }
+  .stat-card h3 {
+    font-size: 1.3rem;
+  }
+  .mini-calendar {
+    padding: 10px;
+  }
+  .mini-calendar-header {
+    font-size: 1rem;
+  }
+  .mini-calendar-weekdays {
+    font-size: 0.85rem;
+    padding: 6px 0;
+  }
+  .mini-calendar-weekdays div {
+    padding: 4px;
+  }
+  .mini-calendar-day {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+  .mini-calendar-days {
+    min-height: 180px;
+  }
+  .reset-date-btn {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+  .upload-section,
+  .html-reference-section,
+  .blog-section,
+  .query-section {
+    padding: 15px;
+  }
+  .upload-section h5,
+  .blog-section h5,
+  .query-section h5 {
+    font-size: 1.3rem;
+  }
+  .reference-card {
+    padding: 10px;
+  }
+  .reference-card h3 {
+    font-size: 1.3rem;
+  }
+  .reference-card h4 {
+    font-size: 1.1rem;
+  }
+  .reference-card p,
+  .reference-card pre,
+  .reference-card ul,
+  .reference-card ol,
+  .reference-card dl {
+    font-size: 0.85rem;
+  }
+  .blog-card {
+    height: 400px;
+  }
+  .blog-card .image-placeholder {
+    height: 150px;
+  }
+  .blog-card .card-title {
+    font-size: 1.1rem;
+  }
+  .blog-card .card-text {
+    font-size: 0.85rem;
+  }
+  .search-section {
+    gap: 10px;
+  }
+  .search-section .input-group {
+    flex-direction: column;
+  }
+  .search-section input {
+    max-width: 100%;
+  }
+  .query-table {
+    font-size: 0.85rem;
+  }
+  .query-table thead {
+    display: none;
+  }
+  .query-table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+  }
+  .query-table tbody tr:nth-child(odd),
+  .query-table tbody tr:nth-child(even) {
+    background-color: transparent;
+  }
+  .query-table tbody tr:hover {
+    background-color: rgba(108, 92, 231, 0.05);
+  }
+  .query-table td {
+    display: block;
+    text-align: right;
+    padding: 8px 15px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+  }
+  .query-table td:last-child {
+    border-bottom: none;
+  }
+  .query-table td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    font-weight: bold;
+    color: var(--dark-color);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .query-table {
+    font-size: 0.9rem;
+  }
+  .query-table th,
+  .query-table td {
+    padding: 12px;
+  }
+}
+
+/* Toggle Button */
+.btn-toggle {
+  background: none;
+  border: none;
+  color: inherit;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  transition: background var(--transition);
+}
+.btn-toggle:focus {
+  outline: none;
+}
+
+/* Toast & Alerts */
+.toast-container {
+  z-index: 9999;
+}
+.toast.show {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.toast-body {
+  font-size: 1.08em;
+}
+.badge.bg-success {
+  background: #28a745 !important;
+}
+.btn-xs {
+  font-size: 0.77em !important;
+  padding: 2px 7px !important;
+  border-radius: 4px !important;
+}
+
+/* Miscellaneous */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #dbeafe;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+/* ---- MANAGE BLOGS CARD STYLES ---- */
+.blog-card {
+  background: linear-gradient(135deg, #f8f9fa 60%, #edf4ff 100%);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(108, 92, 231, 0.07),
+    0 1.5px 6px rgba(44, 62, 80, 0.05);
+  transition: box-shadow 0.24s, transform 0.24s;
+  padding: 0;
+  margin-bottom: 32px;
+  overflow: hidden;
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card:hover {
+  box-shadow: 0 12px 36px rgba(108, 92, 231, 0.16),
+    0 2px 10px rgba(44, 62, 80, 0.09);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.blog-card .blog-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: #e4e7ed;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  transition: filter 0.18s;
+}
+
+.blog-card .blog-image:hover {
+  filter: brightness(0.9) blur(1px);
+}
+
+.blog-card .card-body {
+  padding: 1.7rem 1.4rem 1.3rem 1.4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.blog-card .card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.4px;
+  line-height: 1.21;
+}
+
+.blog-card .card-meta {
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  margin-bottom: 0.7rem;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.blog-card .card-meta .meta-tag {
+  background: #eceaff;
+  color: var(--primary-color);
+  border-radius: 8px;
+  padding: 2px 10px;
+  font-size: 0.88em;
+  margin-right: 6px;
+}
+
+.blog-card .card-text {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+  max-height: 70px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.blog-card .blog-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.btn-edit,
+.btn-delete {
+  border: none;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 8px 20px;
+  margin: 0 2px;
+  font-size: 1em;
+  box-shadow: 0 1.5px 5px rgba(108, 92, 231, 0.07);
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background: linear-gradient(90deg, #6c5ce7 0%, #a29bfe 100%);
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background: linear-gradient(90deg, #5649c0 0%, #6c5ce7 100%);
+  color: #fff;
+  transform: translateY(-1px) scale(1.04);
+}
+
+.btn-delete {
+  background: linear-gradient(90deg, #ff7675 0%, #e74c3c 100%);
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: linear-gradient(90deg, #d63031 0%, #c0392b 100%);
+  color: #fff;
+  transform: translateY(-1px) scale(1.04);
+}
+
+@media (max-width: 767px) {
+  .blog-card .card-body {
+    padding: 1rem 0.8rem 1rem 0.8rem;
+  }
+  .blog-card .card-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* ---- BLOG EDIT MODAL ---- */
+.modal-blog-fade {
+  display: block;
+  background: rgba(44, 62, 80, 0.2);
+  z-index: 1050;
+}
+
+.modal-blog .modal-dialog {
+  border-radius: 22px;
+  max-width: 500px;
+}
+
+.modal-blog .modal-content {
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  box-shadow: 0 8px 32px rgba(108, 92, 231, 0.1);
+  border: none;
+  padding: 0;
+}
+
+.modal-blog .modal-header {
+  border-bottom: none;
+  background: var(--gradient-bg);
+  border-radius: 18px 18px 0 0;
+  color: #fff;
+  padding: 1.2rem 1.5rem;
+}
+
+.modal-blog .modal-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.modal-blog .btn-close {
+  color: #fff;
+  background: transparent;
+  opacity: 0.8;
+  font-size: 1.3em;
+}
+
+.modal-blog .modal-body {
+  padding: 1.7rem 1.5rem 1.2rem 1.5rem;
+}
+
+.modal-blog .modal-footer {
+  border-top: none;
+  background: #f7f7fa;
+  border-radius: 0 0 18px 18px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-blog input,
+.modal-blog textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  padding: 9px 13px;
+  font-size: 1em;
+  margin-bottom: 1.1rem;
+  transition: border-color 0.18s;
+  background: #f9fafe;
+}
+
+.modal-blog input:focus,
+.modal-blog textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px #a29bfe33;
+}
+
+.modal-blog .btn-cancel {
+  background: #636e72;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 22px;
+  font-weight: 600;
+  transition: background 0.16s;
+}
+
+.modal-blog .btn-cancel:hover {
+  background: #2d3436;
+}
+
+.modal-blog .btn-save {
+  background: linear-gradient(90deg, #6c5ce7 0%, #a29bfe 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 22px;
+  font-weight: 600;
+  transition: background 0.18s;
+}
+
+.modal-blog .btn-save:hover {
+  background: linear-gradient(90deg, #5649c0 0%, #6c5ce7 100%);
+  color: #fff;
+}
+
+/* ---- END MANAGE BLOGS ---- */
+/* ==========================================================================
+   CSS Table of Contents
+   ==========================================================================
+   1. Global Styles & Variables
+   2. Sidebar Styles
+   3. Dashboard/Home Styles
+   4. Mini Calendar Styles
+   5. Exam Section Styles
+   6. Upload Section Styles
+   7. HTML Reference Section Styles
+   8. Blog Section Styles
+   9. Query Table Styles
+   10. Footer Styles
+   11. Responsive Media Queries
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Global Styles & Variables
+   ========================================================================== */
+:root {
+  --primary: #6c5ce7; /* Primary color for buttons, links */
+  --primary-hover: #5649c0; /* Hover state for primary color */
+  --bg-dark: #2d3436; /* Dark background color */
+  --text-muted: #636e72; /* Muted text color for secondary text */
+  --white: #ffffff; /* White color */
+  --light: #f5f6fa; /* Light background color */
+  --radius: 0.5rem; /* Border radius for elements */
+  --transition: 0.3s ease; /* Transition timing for animations */
+  --text-secondary: #151618; /* Secondary text color */
+  --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); /* Shadow for cards */
+  --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Hover shadow for cards */
+  --primary-color: #6c5ce7; /* Primary color (alias) */
+  --secondary-color: #a29bfe; /* Secondary color for gradients */
+  --dark-color: #2d3436; /* Dark color for text and backgrounds */
+  --success-color: #00b894; /* Success color for indicators */
+  --event-color: #e74c3c; /* Event color for calendar */
+  --event-hover: #c0392b; /* Hover state for event color */
+  --glass-bg: rgba(255, 255, 255, 0.2); /* Glass background for sections */
+  --gradient-bg: linear-gradient(
+    90deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  ); /* Gradient background */
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Base font */
+  background: linear-gradient(
+    135deg,
+    #f5f6fa 0%,
+    #e0e7ff 100%
+  ); /* Body background gradient */
+  color: var(--dark-color); /* Default text color */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+.container {
+  padding: 40px 20px; /* Consistent padding for containers */
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1; /* Fade in to full opacity */
+    transform: translateY(0); /* Move to original position */
+  }
+}
+
+/* ==========================================================================
+   2. Sidebar Styles
+   ========================================================================== */
+.sidebar {
+  width: 250px; /* Fixed width for sidebar */
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f8f9fa 100%
+  ); /* Gradient background */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  overflow-y: auto; /* Enable vertical scrolling */
+  z-index: 1030; /* Ensure sidebar is above other elements */
+  transition: transform 0.3s ease; /* Smooth transition for mobile toggle */
+  height: 100vh; /* Full viewport height */
+  position: fixed; /* Fixed position on the left */
+  top: 0;
+  left: 0;
+}
+
+.sidebar .logo {
+  font-size: 1.8rem; /* Logo font size */
+  font-weight: 700; /* Bold logo text */
+  color: var(--primary-color); /* Logo text color */
+  padding: 20px; /* Padding around logo */
+  text-align: center; /* Center align logo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.sidebar .logo img {
+  width: 50px; /* Logo image size */
+  height: 50px;
+  object-fit: cover; /* Ensure image fits without distortion */
+  transition: transform 0.3s ease; /* Smooth scaling on hover */
+}
+
+.sidebar .logo img:hover {
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+.sidebar .logo-text {
+  margin-top: 10px; /* Space between logo image and text */
+  font-size: 1.1rem; /* Logo text size */
+  color: var(--primary-color); /* Logo text color */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+}
+
+.sidebar .nav-link {
+  color: var(--dark-color); /* Default link color */
+  border-radius: 5px; /* Rounded corners */
+  margin: 5px 10px; /* Margin around links */
+  padding: 10px 12px; /* Padding inside links */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.sidebar .nav-link:hover {
+  background: var(--gradient-bg); /* Gradient background on hover */
+  color: white; /* White text on hover */
+  transform: translateX(5px); /* Slight shift on hover */
+}
+
+.sidebar .nav-link.active {
+  background: var(--gradient-bg); /* Gradient background for active link */
+  color: white; /* White text for active link */
+}
+
+.sidebar .nav-link .dropdown-icon {
+  transition: transform 0.3s ease; /* Smooth rotation for dropdown icon */
+}
+
+.sidebar .nav-link.collapsed .dropdown-icon {
+  transform: rotate(-90deg); /* Rotate icon when collapsed */
+}
+
+.sidebar .dropdown-menu {
+  padding-left: 20px; /* Indent dropdown items */
+  background-color: rgba(
+    242,
+    242,
+    242,
+    0.8
+  ); /* Slightly transparent background */
+  border: none; /* No border */
+  box-shadow: none; /* No shadow */
+  transition: max-height 0.3s ease; /* Smooth height transition */
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.sidebar .dropdown-item {
+  padding: 8px 15px; /* Padding for dropdown items */
+  border-radius: 5px; /* Rounded corners */
+  margin: 2px 0; /* Small margin between items */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.sidebar .dropdown-item:hover {
+  background: var(--gradient-bg); /* Gradient background on hover */
+  color: white; /* White text on hover */
+  transform: translateX(5px); /* Slight shift on hover */
+}
+
+.sidebar .dropdown-item.active {
+  background: var(--gradient-bg); /* Gradient background for active item */
+  color: white; /* White text for active item */
+}
+
+.sidebar .nav-section {
+  font-weight: bold; /* Bold section titles */
+  margin: 15px 15px 5px; /* Margin around section titles */
+  color: var(--dark-color); /* Section title color */
+  font-size: 0.9rem; /* Section title size */
+  letter-spacing: 1px; /* Slight letter spacing */
+}
+
+.navbar-toggler {
+  display: none; /* Hidden by default, shown on mobile */
+  border: none; /* No border */
+  background: transparent; /* Transparent background */
+  font-size: 1.25rem; /* Icon size */
+  padding: 0.5rem; /* Padding around icon */
+  color: var(--primary-color); /* Icon color */
+}
+
+.sidebar-close-btn {
+  display: none; /* Hidden by default, shown on mobile */
+  position: absolute; /* Positioned at top-right of sidebar */
+  top: 15px;
+  right: 15px;
+  background: none; /* No background */
+  border: none; /* No border */
+  font-size: 1.2rem; /* Icon size */
+  color: var(--primary-color); /* Icon color */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* ==========================================================================
+   3. Dashboard/Home Styles
+   ========================================================================== */
+.main-content {
+  margin-left: 250px; /* Space for sidebar */
+  padding: 20px; /* Padding inside main content */
+  transition: margin 0.3s ease; /* Smooth transition for mobile toggle */
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0; /* Padding for header */
+}
+
+.dashboard-title {
+  font-size: 1.8rem; /* Title font size */
+  font-weight: 700; /* Bold title */
+  color: var(--dark-color); /* Title color */
+  background: var(--gradient-bg); /* Gradient text background */
+  -webkit-background-clip: text; /* Clip gradient to text */
+  -webkit-text-fill-color: transparent; /* Transparent text fill */
+}
+
+.stat-card {
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f8f9fa 100%
+  ); /* Gradient background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: var(--card-shadow); /* Default shadow */
+  padding: 20px; /* Padding inside card */
+  margin-bottom: 20px; /* Space below card */
+  opacity: 0; /* Start invisible for animation */
+  transform: translateY(20px); /* Start slightly below for animation */
+  animation: fadeIn 0.5s ease forwards; /* Fade-in animation */
+}
+
+.stat-card:hover {
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: var(--hover-shadow); /* Enhanced shadow on hover */
+}
+
+.stat-card .icon {
+  font-size: 2rem; /* Icon size */
+  background: var(--gradient-bg); /* Gradient text background */
+  background-clip: text; /* Clip gradient to text */
+  -webkit-text-fill-color: transparent; /* Transparent text fill */
+  margin-bottom: 15px; /* Space below icon */
+}
+
+.stat-card h3 {
+  font-size: 1.5rem; /* Heading size */
+  margin-bottom: 5px; /* Space below heading */
+  color: var(--dark-color); /* Heading color */
+}
+
+.stat-card .update-info {
+  color: var(--text-muted); /* Muted text color */
+  font-size: 0.85rem; /* Small text size */
+  display: flex;
+  align-items: center;
+}
+
+.stat-card .update-info i {
+  margin-right: 5px; /* Space before icon */
+  color: var(--success-color); /* Success color for icon */
+}
+
+/* ==========================================================================
+   4. Mini Calendar Styles
+   ========================================================================== */
+.mini-calendar {
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f8f9fa 100%
+  ); /* Gradient background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 15px; /* Padding inside calendar */
+  box-shadow: var(--card-shadow); /* Default shadow */
+  margin-top: 20px; /* Space above calendar */
+  opacity: 0; /* Start invisible for animation */
+  transform: translateY(20px); /* Start slightly below for animation */
+  animation: fadeIn 0.5s ease forwards 0.2s; /* Fade-in animation with delay */
+}
+
+.mini-calendar-header {
+  margin-bottom: 12px; /* Space below header */
+  font-weight: 600; /* Bold header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--dark-color); /* Header color */
+  font-size: 1.1rem; /* Header size */
+}
+
+.mini-calendar-header button {
+  background: none; /* No background */
+  border: none; /* No border */
+  color: var(--primary-color); /* Button color */
+  font-size: 1rem; /* Button size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: color 0.3s ease; /* Smooth color transition */
+  padding: 5px; /* Padding around button */
+}
+
+.mini-calendar-header button:hover {
+  color: var(--primary-hover); /* Hover color */
+}
+
+.mini-calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
+  text-align: center; /* Center text */
+  font-size: 0.95rem; /* Text size */
+  font-weight: 700; /* Bold text */
+  color: var(--dark-color); /* Text color */
+  margin-bottom: 10px; /* Space below weekdays */
+  padding: 8px 0; /* Padding inside weekdays */
+  background: linear-gradient(
+    145deg,
+    #f8f9fa 0%,
+    #e9ecef 100%
+  ); /* Gradient background */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+.mini-calendar-weekdays div {
+  padding: 6px; /* Padding for each day */
+  line-height: 1.2; /* Tight line height */
+}
+
+.mini-calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
+  gap: 4px; /* Gap between days */
+  min-height: 200px; /* Minimum height for calendar */
+}
+
+.mini-calendar-day {
+  padding: 8px; /* Padding inside day */
+  text-align: center; /* Center text */
+  font-size: 0.95rem; /* Text size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  background: #ffffff; /* White background */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  line-height: 1.5; /* Line height for text */
+}
+
+.mini-calendar-day:hover {
+  background-color: var(--secondary-color); /* Hover background */
+  color: white; /* White text on hover */
+  transform: scale(1.05); /* Slight scale on hover */
+}
+
+.mini-calendar-day.empty {
+  background: transparent; /* Transparent for empty days */
+  box-shadow: none; /* No shadow */
+  visibility: hidden; /* Hidden */
+}
+
+.mini-calendar-day.today {
+  background-color: var(--primary-color); /* Primary color for today */
+  color: white; /* White text */
+  font-weight: bold; /* Bold text */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+
+.mini-calendar-day.selected {
+  border: 2px solid var(--primary-color); /* Border for selected day */
+  color: var(--primary-color); /* Text color */
+  font-weight: bold; /* Bold text */
+  background: #ffffff; /* White background */
+}
+
+.mini-calendar-day.event {
+  background-color: var(--event-color); /* Event color */
+  color: white; /* White text */
+  font-weight: bold; /* Bold text */
+  position: relative; /* For pseudo-element positioning */
+  overflow: hidden; /* Hide overflow */
+}
+
+.mini-calendar-day.event:hover {
+  background-color: var(--event-hover); /* Hover color for events */
+}
+
+.mini-calendar-day.event::after {
+  content: ""; /* Dot indicator for events */
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: white; /* White dot */
+  border-radius: 50%; /* Round dot */
+}
+
+.calendar-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between controls */
+}
+
+.reset-date-btn {
+  background: none; /* No background */
+  border: 1px solid var(--primary-color); /* Border color */
+  color: var(--primary-color); /* Text color */
+  padding: 5px 10px; /* Padding inside button */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 0.85rem; /* Text size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.reset-date-btn:hover {
+  background: var(--primary-color); /* Background on hover */
+  color: white; /* White text on hover */
+}
+
+/* ==========================================================================
+   5. Exam Section Styles
+   ========================================================================== */
+.exam-section {
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f8f9fa 100%
+  ); /* Gradient background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 15px; /* Padding inside section */
+  margin-top: 20px; /* Space above section */
+  box-shadow: var(--card-shadow); /* Default shadow */
+  opacity: 0; /* Start invisible for animation */
+  transform: translateY(20px); /* Start slightly below for animation */
+  animation: fadeIn 0.5s ease forwards 0.1s; /* Fade-in animation with delay */
+}
+
+.exam-section h5 {
+  margin-bottom: 15px; /* Space below heading */
+  color: var(--dark-color); /* Heading color */
+}
+
+.exam-item {
+  padding: 10px 0; /* Padding for each item */
+  border-bottom: 1px solid #eee; /* Separator line */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.exam-item:hover {
+  background-color: #f8f9fa; /* Hover background */
+  padding-left: 5px; /* Slight shift on hover */
+}
+
+.exam-item:last-child {
+  border-bottom: none; /* No border for last item */
+}
+
+/* ==========================================================================
+   6. Upload Section Styles
+   ========================================================================== */
+.upload-section {
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f8f9fa 100%
+  ); /* Gradient background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 25px; /* Padding inside section */
+  box-shadow: var(--card-shadow); /* Default shadow */
+  margin-top: 20px; /* Space above section */
+  opacity: 0; /* Start invisible for animation */
+  transform: translateY(20px); /* Start slightly below for animation */
+  animation: fadeIn 0.5s ease forwards 0.1s; /* Fade-in animation with delay */
+}
+
+.upload-section:hover {
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: var(--hover-shadow); /* Enhanced shadow on hover */
+}
+
+.upload-section h5 {
+  margin-bottom: 20px; /* Space below heading */
+  color: var(--dark-color); /* Heading color */
+  font-weight: 600; /* Bold heading */
+  font-size: 1.5rem; /* Heading size */
+}
+
+.upload-form .form-group {
+  margin-bottom: 20px; /* Space between form groups */
+}
+
+.upload-form label {
+  font-weight: 500; /* Medium bold label */
+  color: var(--dark-color); /* Label color */
+  margin-bottom: 8px; /* Space below label */
+  display: block; /* Block display for label */
+}
+
+.upload-form input,
+.upload-form textarea,
+.upload-form select {
+  width: 100%; /* Full width */
+  padding: 10px; /* Padding inside inputs */
+  border: 1px solid #ddd; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Text size */
+  transition: border-color 0.3s ease; /* Smooth border color transition */
+}
+
+.upload-form input:focus,
+.upload-form textarea:focus,
+.upload-form select:focus {
+  outline: none; /* Remove default outline */
+  border-color: var(--primary-color); /* Border color on focus */
+  box-shadow: 0 0 5px rgba(108, 92, 231, 0.3); /* Subtle glow on focus */
+}
+
+.upload-form textarea {
+  min-height: 150px; /* Minimum height for textarea */
+  resize: vertical; /* Allow vertical resize only */
+}
+
+.upload-form .btn-submit {
+  background: var(--gradient-bg); /* Gradient background */
+  color: white; /* White text */
+  padding: 12px 30px; /* Padding inside button */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Text size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.upload-form .btn-submit:hover {
+  background: linear-gradient(
+    90deg,
+    var(--primary-hover) 0%,
+    var(--secondary-color) 100%
+  ); /* Gradient on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4); /* Shadow on hover */
+}
+
+/* ==========================================================================
+   7. HTML Reference Section Styles
+   ========================================================================== */
+.html-reference-section {
+  background: var(--glass-bg); /* Glass background effect */
+  backdrop-filter: blur(10px); /* Blur effect for glass */
+  border-radius: 10px; /* Rounded corners */
+  padding: 25px; /* Padding inside section */
+  box-shadow: var(--card-shadow); /* Default shadow */
+  margin-top: 20px; /* Space above section */
+  opacity: 0; /* Start invisible for animation */
+  transform: translateY(20px); /* Start slightly below for animation */
+  animation: fadeIn 0.5s ease forwards 0.2s; /* Fade-in animation with delay */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+}
+
+.html-reference-section:hover {
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: var(--hover-shadow); /* Enhanced shadow on hover */
+}
+
+.html-reference-section h2 {
+  font-size: 1.8rem; /* Heading size */
+  font-weight: 600; /* Bold heading */
+  color: var(--dark-color); /* Heading color */
+  background: var(--gradient-bg); /* Gradient text background */
+  -webkit-background-clip: text; /* Clip gradient to text */
+  -webkit-text-fill-color: transparent; /* Transparent text fill */
+  margin-bottom: 20px; /* Space below heading */
+  text-align: center; /* Center align heading */
+}
+
+.reference-card {
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f8f9fa 100%
+  ); /* Gradient background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Padding inside card */
+  box-shadow: var(--card-shadow); /* Default shadow */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+}
+
+.reference-card:hover {
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: var(--hover-shadow); /* Enhanced shadow on hover */
+}
+
+.reference-card h3 {
+  font-size: 1.4rem; /* Heading size */
+  font-weight: 600; /* Bold heading */
+  color: var(--dark-color); /* Heading color */
+  margin-bottom: 15px; /* Space below heading */
+}
+
+.reference-card h4 {
+  font-size: 1.2rem; /* Subheading size */
+  font-weight: 500; /* Medium bold subheading */
+  color: var(--dark-color); /* Subheading color */
+  margin-top: 15px; /* Space above subheading */
+  margin-bottom: 10px; /* Space below subheading */
+}
+
+.reference-card p {
+  font-size: 0.95rem; /* Text size */
+  color: var(--text-muted); /* Muted text color */
+  margin-bottom: 10px; /* Space below paragraph */
+}
+
+.tag-display {
+  background-color: #e9ecef; /* Light gray background */
+  padding: 5px 10px; /* Padding inside tag */
+  border-radius: 4px; /* Rounded corners */
+  display: inline-block; /* Inline-block display */
+  font-family: "Courier New", Courier, monospace; /* Monospace font */
+  font-size: 0.9rem; /* Text size */
+  color: #c0392b; /* Red color for tags */
+  margin: 5px 0; /* Margin around tag */
+}
+
+.reference-card pre {
+  background: #f8f9fa; /* Light background */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px; /* Padding inside code block */
+  font-size: 0.9rem; /* Text size */
+  color: var(--dark-color); /* Text color */
+  overflow-x: auto; /* Horizontal scroll for overflow */
+  border: 1px solid #ddd; /* Subtle border */
+}
+
+.reference-card pre code {
+  font-family: "Courier New", Courier, monospace; /* Monospace font */
+}
+
+.example-box {
+  border: 1px dashed #ced4da; /* Dashed border */
+  padding: 15px; /* Padding inside box */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #fff; /* White background */
+  margin: 10px 0; /* Margin around box */
+}
+
+.example-box a {
+  color: var(--primary-color); /* Link color */
+  text-decoration: none; /* No underline */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.example-box a:hover {
+  color: var(--primary-hover); /* Hover color */
+  text-decoration: underline; /* Underline on hover */
+}
+
+.example-box img {
+  max-width: 100%; /* Responsive image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.reference-card ul,
+.reference-card ol,
+.reference-card dl {
+  font-size: 0.95rem; /* Text size */
+  color: var(--text-muted); /* Muted text color */
+  margin-bottom: 10px; /* Space below lists */
+}
+
+.reference-card ul li,
+.reference-card ol li,
+.reference-card dl dt,
+.reference-card dl dd {
+  margin-bottom: 5px; /* Space between list items */
+}
+
+.reference-card dl dt {
+  font-weight: 500; /* Medium bold term */
+  color: var(--dark-color); /* Term color */
+}
+
+.reference-card table {
+  width: 100%; /* Full width */
+  margin: 10px 0; /* Margin around table */
+  border-collapse: collapse; /* Collapse borders */
+  background: #ffffff; /* White background */
+  border-radius: 5px; /* Rounded corners */
+  overflow: hidden; /* Hide overflow for rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.reference-card table th,
+.reference-card table td {
+  border: 1px solid #dee2e6; /* Border color */
+  padding: 10px; /* Padding inside cells */
+  text-align: left; /* Left align text */
+  font-size: 0.9rem; /* Text size */
+}
+
+.reference-card table th {
+  background: var(--gradient-bg); /* Gradient background for headers */
+  color: #fff; /* White text */
+}
+
+.reference-card table td {
+  background-color: #fff; /* White background for cells */
+}
+
+.reference-card table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Light gray for odd rows */
+}
+
+.reference-card table tbody tr:hover {
+  background-color: rgba(108, 92, 231, 0.1); /* Hover background */
+}
+
+.reference-card .note {
+  font-style: italic; /* Italic text */
+  color: var(--text-muted); /* Muted text color */
+  font-size: 0.9rem; /* Text size */
+  margin-top: 10px; /* Space above note */
+  background: #e7f3fe; /* Light blue background */
+  border-left: 4px solid var(--primary-color); /* Blue border */
+  padding: 10px 15px; /* Padding inside note */
+  border-radius: 4px; /* Rounded corners */
+}
+
+/* ==========================================================================
+   8. Blog Section Styles
+   ========================================================================== */
+.search-section {
+  margin-bottom: 20px; /* Space below section */
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between elements */
+}
+
+.search-section .input-group-wrapper {
+  display: flex;
+  gap: 10px; /* Space between inputs */
+  max-width: 600px; /* Maximum width */
+}
+
+.search-section input {
+  width: 100%; /* Full width */
+  max-width: 300px; /* Maximum width for input */
+  padding: 10px; /* Padding inside input */
+  border: 1px solid #ddd; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Text size */
+  transition: border-color 0.3s ease; /* Smooth border color transition */
+}
+
+.search-section input:focus {
+  outline: none; /* Remove default outline */
+  border-color: var(--primary-color); /* Border color on focus */
+  box-shadow: 0 0 5px rgba(108, 92, 231, 0.3); /* Subtle glow on focus */
+}
+
+.search-section .btn-search {
+  background: var(--gradient-bg); /* Gradient background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding inside button */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Text size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  width: fit-content; /* Fit content width */
+}
+
+.search-section .btn-search:hover {
+  background: linear-gradient(
+    90deg,
+    var(--primary-hover) 0%,
+    var(--secondary-color) 100%
+  ); /* Gradient on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4); /* Shadow on hover */
+}
+
+.blog-section {
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f8f9fa 100%
+  ); /* Gradient background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 25px; /* Padding inside section */
+  box-shadow: var(--card-shadow); /* Default shadow */
+  margin-top: 20px; /* Space above section */
+  opacity: 0; /* Start invisible for animation */
+  transform: translateY(20px); /* Start slightly below for animation */
+  animation: fadeIn 0.5s ease forwards 0.1s; /* Fade-in animation with delay */
+}
+
+.blog-section:hover {
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: var(--hover-shadow); /* Enhanced shadow on hover */
+}
+
+.blog-section h5 {
+  margin-bottom: 20px; /* Space below heading */
+  color: var(--dark-color); /* Heading color */
+  font-weight: 600; /* Bold heading */
+  font-size: 1.5rem; /* Heading size */
+}
+
+.blog-card {
+  background: #ffffff; /* White background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: var(--card-shadow); /* Default shadow */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  margin-bottom: 20px; /* Space below card */
+  height: 450px; /* Fixed height for consistency */
+  display: flex;
+  flex-direction: column;
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.blog-card:hover {
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: var(--hover-shadow); /* Enhanced shadow on hover */
+}
+
+.blog-card .image-placeholder {
+  width: 100%; /* Full width */
+  height: 200px; /* Fixed height for placeholder */
+  background: #e0e0e0; /* Gray background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666; /* Text color */
+  font-size: 1rem; /* Text size */
+  border-bottom: 1px solid #ddd; /* Separator line */
+}
+
+.blog-card .card-body {
+  padding: 15px; /* Padding inside card body */
+  flex-grow: 1; /* Grow to fill space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.blog-card .card-title {
+  font-size: 1.2rem; /* Title size */
+  font-weight: 600; /* Bold title */
+  color: var(--dark-color); /* Title color */
+  margin-bottom: 10px; /* Space below title */
+}
+
+.blog-card .card-text {
+  font-size: 0.9rem; /* Text size */
+  color: var(--text-muted); /* Muted text color */
+  margin-bottom: 15px; /* Space below text */
+  display: -webkit-box; /* Limit text to 3 lines */
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.blog-card .btn {
+  background: var(--gradient-bg); /* Gradient background */
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 8px 15px; /* Padding inside button */
+  border-radius: 5px; /* Rounded corners */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.blog-card .btn:hover {
+  background: linear-gradient(
+    90deg,
+    var(--primary-hover) 0%,
+    var(--secondary-color) 100%
+  ); /* Gradient on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4); /* Shadow on hover */
+}
+
+.blog-card .confirmation {
+  display: none; /* Hidden by default */
+  margin-top: 10px; /* Space above confirmation */
+}
+
+.blog-card .confirmation.show {
+  display: block; /* Show when active */
+}
+
+.blog-card .btn-confirm {
+  background: #dc3545; /* Red background */
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 8px 15px; /* Padding inside button */
+  border-radius: 5px; /* Rounded corners */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.blog-card .btn-confirm:hover {
+  background: #c82333; /* Darker red on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.blog-card .btn-cancel {
+  background: #6c757d; /* Gray background */
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 8px 15px; /* Padding inside button */
+  border-radius: 5px; /* Rounded corners */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.blog-card .btn-cancel:hover {
+  background: #5a6268; /* Darker gray on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* ==========================================================================
+   9. Query Table Styles
+   ========================================================================== */
+.query-section {
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f8f9fa 100%
+  ); /* Gradient background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 25px; /* Padding inside section */
+  box-shadow: var(--card-shadow); /* Default shadow */
+  margin-top: 20px; /* Space above section */
+  opacity: 0; /* Start invisible for animation */
+  transform: translateY(20px); /* Start slightly below for animation */
+  animation: fadeIn 0.5s ease forwards 0.1s; /* Fade-in animation with delay */
+}
+
+.query-section:hover {
+  transform: translateY(-5px); /* Lift on hover */
+  box-shadow: var(--hover-shadow); /* Enhanced shadow on hover */
+}
+
+.query-section h5 {
+  margin-bottom: 20px; /* Space below heading */
+  color: var(--dark-color); /* Heading color */
+  font-weight: 600; /* Bold heading */
+  font-size: 1.5rem; /* Heading size */
+}
+
+.query-table {
+  width: 100%; /* Full width */
+  border-collapse: collapse; /* Collapse borders */
+  border-spacing: 0; /* No spacing between cells */
+  font-size: 1rem; /* Text size */
+  background: #ffffff; /* White background */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden; /* Hide overflow for rounded corners */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Shadow for table */
+}
+
+.query-table thead {
+  background: var(--gradient-bg); /* Gradient background for headers */
+  color: white; /* White text */
+}
+
+.query-table th {
+  padding: 15px; /* Padding inside header cells */
+  text-align: left; /* Left align text */
+  font-weight: 600; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+  letter-spacing: 0.5px; /* Slight letter spacing */
+}
+
+.query-table td {
+  padding: 15px; /* Padding inside cells */
+  text-align: left; /* Left align text */
+  border-bottom: 1px solid #e0e0e0; /* Separator line */
+}
+
+.query-table tbody tr:last-child td {
+  border-bottom: none; /* No border for last row */
+}
+
+.query-table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Light gray for odd rows */
+}
+
+.query-table tbody tr:nth-child(even) {
+  background-color: #ffffff; /* White for even rows */
+}
+
+.query-table tbody tr:hover {
+  background-color: rgba(108, 92, 231, 0.1); /* Hover background */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.query-table th:first-child {
+  border-top-left-radius: 10px; /* Rounded corner for first header */
+}
+
+.query-table th:last-child {
+  border-top-right-radius: 10px; /* Rounded corner for last header */
+}
+
+/* ==========================================================================
+   10. Footer Styles
+   ========================================================================== */
+.footer {
+  text-align: center; /* Center align text */
+  padding: 20px 0; /* Padding for footer */
+  margin-top: 20px; /* Space above footer */
+  color: var(--text-muted); /* Muted text color */
+  font-size: 0.85rem; /* Text size */
+  border-top: 1px solid #eee; /* Separator line */
+}
+
+.footer span {
+  transition: color 0.3s ease; /* Smooth color transition */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.footer span:hover {
+  color: var(--primary-color); /* Hover color */
+}
+
+/* ==========================================================================
+   11. Responsive Media Queries
+   ========================================================================== */
+@media (max-width: 991px) {
+  .sidebar {
+    transform: translateX(-100%); /* Hide sidebar off-screen */
+  }
+
+  .sidebar.show {
+    transform: translateX(0); /* Show sidebar on toggle */
+  }
+
+  .main-content {
+    margin-left: 0 !important; /* Remove sidebar margin */
+  }
+
+  .navbar-toggler {
+    display: block !important; /* Show toggler on mobile */
+  }
+
+  .sidebar-close-btn {
+    display: block !important; /* Show close button on mobile */
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard-title,
+  .html-reference-section h2 {
+    font-size: 1.5rem; /* Smaller heading size */
+  }
+
+  .stat-card {
+    padding: 15px; /* Reduced padding */
+  }
+
+  .stat-card h3 {
+    font-size: 1.3rem; /* Smaller heading size */
+  }
+
+  .mini-calendar {
+    padding: 10px; /* Reduced padding */
+  }
+
+  .mini-calendar-header {
+    font-size: 1rem; /* Smaller header size */
+  }
+
+  .mini-calendar-weekdays {
+    font-size: 0.85rem; /* Smaller text size */
+    padding: 6px 0; /* Reduced padding */
+  }
+
+  .mini-calendar-weekdays div {
+    padding: 4px; /* Reduced padding */
+  }
+
+  .mini-calendar-day {
+    font-size: 0.85rem; /* Smaller text size */
+    padding: 6px; /* Reduced padding */
+  }
+
+  .mini-calendar-days {
+    min-height: 180px; /* Reduced minimum height */
+  }
+
+  .reset-date-btn {
+    font-size: 0.8rem; /* Smaller text size */
+    padding: 4px 8px; /* Reduced padding */
+  }
+
+  .upload-section,
+  .html-reference-section,
+  .blog-section,
+  .query-section {
+    padding: 15px; /* Reduced padding */
+  }
+
+  .upload-section h5,
+  .blog-section h5,
+  .query-section h5 {
+    font-size: 1.3rem; /* Smaller heading size */
+  }
+
+  .reference-card {
+    padding: 10px; /* Reduced padding */
+  }
+
+  .reference-card h3 {
+    font-size: 1.3rem; /* Smaller heading size */
+  }
+
+  .reference-card h4 {
+    font-size: 1.1rem; /* Smaller subheading size */
+  }
+
+  .reference-card p,
+  .reference-card pre,
+  .reference-card ul,
+  .reference-card ol,
+  .reference-card dl {
+    font-size: 0.85rem; /* Smaller text size */
+  }
+
+  .blog-card {
+    height: 400px; /* Reduced height */
+  }
+
+  .blog-card .image-placeholder {
+    height: 150px; /* Reduced height */
+  }
+
+  .blog-card .card-title {
+    font-size: 1.1rem; /* Smaller title size */
+  }
+
+  .blog-card .card-text {
+    font-size: 0.85rem; /* Smaller text size */
+  }
+
+  .search-section {
+    gap: 10px; /* Reduced gap */
+  }
+
+  .search-section .input-group {
+    flex-direction: column; /* Stack inputs vertically */
+  }
+
+  .search-section input {
+    max-width: 100%; /* Full width on mobile */
+  }
+
+  .query-table {
+    font-size: 0.85rem; /* Smaller text size */
+  }
+
+  .query-table thead {
+    display: none; /* Hide headers on mobile */
+  }
+
+  .query-table tbody tr {
+    display: block; /* Stack rows vertically */
+    margin-bottom: 15px; /* Space between rows */
+    border: 1px solid #ddd; /* Border around each row */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #ffffff; /* White background */
+  }
+
+  .query-table tbody tr:nth-child(odd),
+  .query-table tbody tr:nth-child(even) {
+    background-color: transparent; /* Remove alternating colors */
+  }
+
+  .query-table tbody tr:hover {
+    background-color: rgba(108, 92, 231, 0.05); /* Subtle hover background */
+  }
+
+  .query-table td {
+    display: block; /* Stack cells vertically */
+    text-align: right; /* Right align text */
+    padding: 8px 15px; /* Padding inside cells */
+    border-bottom: 1px solid #eee; /* Separator line */
+    position: relative; /* For pseudo-element positioning */
+  }
+
+  .query-table td:last-child {
+    border-bottom: none; /* No border for last cell */
+  }
+
+  .query-table td:before {
+    content: attr(data-label); /* Use data-label for mobile */
+    position: absolute;
+    left: 15px;
+    font-weight: bold; /* Bold label */
+    color: var(--dark-color); /* Label color */
+    text-transform: uppercase; /* Uppercase label */
+    font-size: 0.85rem; /* Label size */
+  }
+
+  .reference-card table {
+    font-size: 0.85rem; /* Smaller text size */
+  }
+
+  .reference-card table thead {
+    display: none; /* Hide headers on mobile */
+  }
+
+  .reference-card table tbody tr {
+    display: block; /* Stack rows vertically */
+    margin-bottom: 15px; /* Space between rows */
+    border: 1px solid #ddd; /* Border around each row */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #ffffff; /* White background */
+  }
+
+  .reference-card table tbody tr:nth-child(odd) {
+    background-color: transparent; /* Remove alternating colors */
+  }
+
+  .reference-card table td {
+    display: block; /* Stack cells vertically */
+    text-align: right; /* Right align text */
+    padding: 8px 15px; /* Padding inside cells */
+    border-bottom: 1px solid #eee; /* Separator line */
+    position: relative; /* For pseudo-element positioning */
+  }
+
+  .reference-card table td:last-child {
+    border-bottom: none; /* No border for last cell */
+  }
+
+  .reference-card table td:before {
+    content: attr(data-label); /* Use data-label for mobile */
+    position: absolute;
+    left: 15px;
+    font-weight: bold; /* Bold label */
+    color: var(--dark-color); /* Label color */
+    text-transform: uppercase; /* Uppercase label */
+    font-size: 0.85rem; /* Label size */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .query-table {
+    font-size: 0.9rem; /* Slightly smaller text size */
+  }
+
+  .query-table th,
+  .query-table td {
+    padding: 12px; /* Reduced padding */
+  }
 }

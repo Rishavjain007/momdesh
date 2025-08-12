@@ -1,32 +1,61 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import familiesRoutes from "./routes/familiesRoutes.js";
+
+dotenv.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
+// Middleware
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || "*", // Customize CORS origin if needed
+}));
 app.use(express.json());
 
-// Debug: check if .env value is being read
-console.log("Mongo URI from .env:", process.env.URI_MONGOOSE);
+// MongoDB Connection
+mongoose.connection.on("error", (err) => {
+  console.error("❌ MongoDB connection error:", err);
+  process.exit(1);
+});
 
-// Connect to MongoDB
-mongoose.connect(process.env.URI_MONGOOSE, {
+mongoose.connection.once("open", () => {
+  console.log("✅ MongoDB connected");
+});
+
+mongoose
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-})
-.then(() => {
-    console.log("✅ MongoDB Connected");
-})
-.catch((err) => {
-    console.error("❌ MongoDB Connection Error:", err);
-});
+  })
+  .catch((err) => console.error("Initial connection error:", err));
 
-// Basic route
+// Routes
+app.use("/api/families", familiesRoutes);
+
 app.get("/", (req, res) => {
-    res.send("Server is running and connected to MongoDB!");
+  res.send("API is running...");
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error("Unexpected error:", err.stack);
+  res.status(500).json({ error: "Something went wrong!" });
+});
+
+// Start server
+const server = app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
+
+// Graceful shutdown
+process.on("SIGTERM", () => {
+  server.close(() => {
+    mongoose.connection.close(false, () => {
+      console.log("Server and MongoDB connection closed");
+      process.exit(0);
+    });
+  });
 });
